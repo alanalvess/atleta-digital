@@ -1,5 +1,5 @@
 # -------- STAGE 1 - BUILD --------
-FROM eclipse-temurin:21-jdk-alpine AS build
+FROM eclipse-temurin:25-jdk-alpine AS build
 
 WORKDIR /app
 
@@ -19,8 +19,7 @@ RUN ./mvnw clean package -DskipTests
 
 
 # -------- STAGE 2 - RUNTIME --------
-FROM eclipse-temurin:21-jre-alpine
-
+FROM eclipse-temurin:25-jre-alpine
 WORKDIR /app
 
 # Copia o jar gerado
