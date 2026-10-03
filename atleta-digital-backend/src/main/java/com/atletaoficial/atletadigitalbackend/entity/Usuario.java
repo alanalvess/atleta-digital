@@ -56,10 +56,10 @@ public class Usuario {
         if (this.getId().equals(usuarioAutenticado.getId())) {return true;}
         if (usuarioAutenticado.getEmail().equals(adminEmail)) {return true;}
 
-        boolean ehAdminOuCoordenador = usuarioAutenticado.getRoles().contains(Role.ADMIN)
-                || usuarioAutenticado.getRoles().contains(Role.COORDENADOR);
+        boolean ehAdminOuTecnico = usuarioAutenticado.getRoles().contains(Role.ADMIN)
+                || usuarioAutenticado.getRoles().contains(Role.TECNICO);
 
-        if (ehAdminOuCoordenador) {return true;}
+        if (ehAdminOuTecnico) {return true;}
         return false;
     }
 

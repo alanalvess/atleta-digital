@@ -51,10 +51,10 @@ public class UsuarioService {
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         boolean isAdminOuCoord = usuarioLogado.getRoles().contains(Role.ADMIN)
-                || usuarioLogado.getRoles().contains(Role.COORDENADOR);
+                || usuarioLogado.getRoles().contains(Role.TECNICO);
 
         if (!isAdminOuCoord) {
-            throw new PermissaoNegadaException("Apenas ADMIN ou COORDENADOR podem visualizar todos os usuários.");
+            throw new PermissaoNegadaException("Apenas ADMIN ou TECNICO podem visualizar todos os usuários.");
         }
 
         return repository.findAll()
