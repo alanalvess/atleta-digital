@@ -31,10 +31,10 @@ function DropdownPerfil() {
         inline
       >
         <DropdownHeader>
-          <span className="block text-sm">{usuario.nome}</span>
-          <span className="block truncate text-sm font-medium">{usuario.email}</span>
+          <span className="block text-sm">{usuario?.nome}</span>
+          <span className="block truncate text-sm font-medium">{usuario?.email}</span>
 
-          {usuario.email !== adminEmail ? '' :
+          {usuario?.email !== adminEmail ? '' :
             <span className="block truncate text-sm font-medium">
               <Link to='admin'>Administração</Link>
             </span>
@@ -49,7 +49,7 @@ function DropdownPerfil() {
           </DropdownItem>
         </Link>
 
-        {usuario.email === adminEmail
+        {usuario?.email === adminEmail
           ? (<Link to="/usuarios/all" className="hover:underline">
               <DropdownItem>
                 Demais Usuários

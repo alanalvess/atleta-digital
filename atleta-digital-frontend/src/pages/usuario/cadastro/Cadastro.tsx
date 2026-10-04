@@ -57,7 +57,7 @@ function Cadastro({
 
       try {
         await cadastrar(`/usuarios/cadastrar`, usuarioCadastro, setUsuarioCadastro, {
-          headers: {Authorization: `Bearer ${usuario.token}`, "Content-Type": "application/json"},
+          headers: {Authorization: `Bearer ${usuario?.token}`, "Content-Type": "application/json"},
         });
 
         ToastAlerta("Usuário cadastrado com sucesso", Toast.Success);
@@ -160,7 +160,7 @@ function Cadastro({
             <Select
               id="roles"
               name="roles"
-              value={usuarioCadastro.roles[0] || ""}
+              value={usuarioCadastro.roles?.[0] || ""}
               onChange={atualizarEstado}
               required
             >

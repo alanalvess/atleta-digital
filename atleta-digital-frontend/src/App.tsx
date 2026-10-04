@@ -26,30 +26,30 @@ function App() {
 
             <div className='min-w-full m-0 p-0  dark:bg-gray-500 min-h-screen'>
 
-              {/*<NavbarElement/>*/}
+              <NavbarElement/>
               <div className='dark:bg-gray-500 min-h-[90vh]'>
 
                 <Routes>
 
-                  {/*<Route path='/' element={<HomePublica/>}/>*/}
-                  {/*<Route path='/home' element={<Home/>}/>*/}
+                  <Route path='/' element={<HomePublica/>}/>
+                  <Route path='/home' element={<Home/>}/>
 
-                  {/*<Route path='/sobre' element={<Sobre/>}/>*/}
-                  {/*<Route path='/duvidas' element={<Duvidas/>}/>*/}
+                  <Route path='/sobre' element={<Sobre/>}/>
+                  <Route path='/duvidas' element={<Duvidas/>}/>
 
-                  {/*<Route path='/login' element={<Login/>}/>*/}
+                  <Route path='/login' element={<Login/>}/>
 
-                  {/*/!*<Route path="/meu-perfil" element={<Perfil/>}/>*!/*/}
-                  {/*<Route path="/usuarios" element={<ListarUsuarios/>}/>*/}
+                  {/*<Route path="/meu-perfil" element={<Perfil/>}/>*/}
+                  <Route path="/usuarios" element={<ListarUsuarios/>}/>
 
-                  {/*<Route path='/erro' element={<Error500/>}/>*/}
-                  {/*<Route path='*' element={<Error404/>}/>*/}
+                  <Route path='/erro' element={<Error500/>}/>
+                  <Route path='*' element={<Error404/>}/>
 
                 </Routes>
               </div>
 
               <div className='relative w-full '>
-                {/*<FooterElement/>*/}
+                <FooterElement/>
               </div>
 
             </div>

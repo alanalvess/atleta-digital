@@ -42,7 +42,7 @@ function ListarUsuarios() {
   async function listarUsuarios() {
     try {
       await buscar("/usuarios/all", setUsuarios, {
-        headers: {Authorization: `Bearer ${usuario.token}`},
+        headers: {Authorization: `Bearer ${usuario?.token}`},
       });
     } catch (error) {
       if (error instanceof Error) {
@@ -57,7 +57,7 @@ function ListarUsuarios() {
     if (!busca.trim()) return listarUsuarios();
     try {
       await buscar(`/usuarios/buscar/${busca}`, setUsuarios, {
-        headers: {Authorization: `Bearer ${usuario.token}`},
+        headers: {Authorization: `Bearer ${usuario?.token}`},
       });
     } catch {
       ToastAlerta("Usuário não encontrado", Toast.Warning);
@@ -142,7 +142,7 @@ function ListarUsuarios() {
 
                 <TableBody className="divide-y divide-gray-200 dark:divide-gray-600">
                   {usuarios.length > 0 ? (
-                    usuarios.map((u) => (
+                    usuarios.map((u: Usuario) => (
                       <TableRow
                         key={u.id}
                         className="hover:bg-gray-50 dark:hover:bg-gray-800 transition duration-150"
@@ -151,7 +151,7 @@ function ListarUsuarios() {
                           className="text-center font-medium text-gray-900 dark:text-gray-100">{u.nome}</TableCell>
                         <TableCell className="text-center">{u.email}</TableCell>
                         <TableCell className="text-center">
-                          {u.roles.map((role) => (
+                          {u.roles?.map((role) => (
                             <Badge key={role} color="info" className="mr-1 flex justify-center">
                               {role}
                             </Badge>
@@ -210,7 +210,7 @@ function ListarUsuarios() {
 
             <div className="md:hidden flex flex-col gap-4 mt-4">
               {usuarios.length > 0 ? (
-                usuarios.map((u) => (
+                usuarios.map((u: Usuario) => (
                   <Card
                     key={u.id}
                     className="shadow-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800"
@@ -228,7 +228,7 @@ function ListarUsuarios() {
                     {/* Funções */}
                     <div className="mb-4">
                       <div className="flex flex-wrap gap-1 mt-1">
-                        {u.roles.map((role) => (
+                        {u.roles?.map((role) => (
                           <Badge key={role} color="info" className="text-xs">
                             {role}
                           </Badge>
