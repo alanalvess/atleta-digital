@@ -23,12 +23,12 @@ function NavbarElement() {
     <>
       <Navbar
         fluid
-        className='bg-gray-800 fixed top-0 py-3 z-50 w-full justify-between h-[10vh]'
+        className='bg-gray-800 fixed top-0 py-3 z-50 w-full justify-between h-[15vh]'
       >
         <NavbarBrand>
           <Link to='/home' className='text-2xl font-bold uppercase'>
             <div className='flex items-center justify-center gap-3'>
-              <img src={Logo} alt='Dia A+' className='max-w-30 ml-2 my-3 h-10'/>
+              <img src={Logo} alt='Dia A+' className='max-w-50 ml-2 my-3 h-20'/>
             </div>
           </Link>
         </NavbarBrand>
