@@ -1,7 +1,8 @@
 export enum Roles {
     ADMIN = 'ADMIN',
     USER = 'USER',
-    ATLETA = 'ATLETA',
-    TECNICO = 'TECNICO',
+    ALUNO = 'ALUNO',
+    COORDENADOR = 'COORDENADOR',
+    PROFESSOR = 'PROFESSOR',
     RESPONSAVEL = 'RESPONSAVEL',
 }

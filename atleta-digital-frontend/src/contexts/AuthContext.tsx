@@ -1,8 +1,9 @@
 import {createContext} from 'react'
+
 import type {UsuarioLogin} from "../models/UsuarioLogin.ts";
 
 export interface AuthContextProps {
-    usuario: UsuarioLogin;
+    usuario: UsuarioLogin | null;
     isAuthenticated: boolean;
     isLoading: boolean;
     isHydrated: boolean;
@@ -12,5 +13,5 @@ export interface AuthContextProps {
 }
 
 export const AuthContext = createContext(
-    {} as AuthContextProps
+  {} as AuthContextProps
 )

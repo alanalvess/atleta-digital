@@ -1,7 +1,7 @@
 import {useNavigate} from 'react-router-dom';
 import {Button} from "flowbite-react";
 
-export default function Error404() {
+export default function Erro404() {
 
     const navigate = useNavigate();
 

@@ -15,48 +15,48 @@ const api = axios.create({
 // }
 
 export const cadastrar = async <T>(
-    url: string,
-    dados: object,
-    setDados: (dados: T) => void,
-    header: object
+  url: string,
+  dados: object,
+  setDados: (dados: T) => void,
+  header: object
 ) => {
     const resposta = await api.post(url, dados, header);
     setDados(resposta.data);
 }
 
 export const login = async <T>(
-    url: string,
-    dados: object,
-    setDados: (dados: T) => void
+  url: string,
+  dados: object,
+  setDados: (dados: T) => void
 ) => {
     const resposta = await api.post(url, dados);
     setDados(resposta.data);
 }
 
 export const buscar = async <T>(
-    url: string,
-    setDados: (dados: T) => void,
-    header?: object
+  url: string,
+  setDados: (dados: T) => void,
+  header?: object
 ) => {
     const resposta = await api.get(url, header);
     setDados(resposta.data);
 }
 
 export const atualizar = async <T>(
-    url: string,
-    dados: object,
-    setDados: (dados: T) => void,
-    header: object
+  url: string,
+  dados: object,
+  setDados: (dados: T) => void,
+  header: object
 ) => {
     const resposta = await api.put(url, dados, header);
     setDados(resposta.data);
 }
 
 export const atualizarAtributo = async <T>(
-    url: string,
-    dados: object,
-    setDados: (dados: T) => void,
-    header: object
+  url: string,
+  dados: object,
+  setDados: (dados: T) => void,
+  header: object
 ) => {
     const resposta = await api.patch(url, dados, header);
     setDados(resposta.data);
@@ -68,9 +68,9 @@ export const deletar = async (url: string, header: object) => {
 
 
 export const buscarQrCode = async (
-    url: string,
-    setImagem: (url: string) => void,
-    header?: object
+  url: string,
+  setImagem: (url: string) => void,
+  header?: object
 ) => {
     const resposta = await api.get(url, {
         ...header,
@@ -83,18 +83,18 @@ export const buscarQrCode = async (
 
 // 🔹 service.ts
 export const registrarPresencaQRCode = async (
-    url: string,
-    dados: Record<string, string>,
-    header: object
+  url: string,
+  dados: Record<string, string>,
+  header: object
 ) => {
     const resposta = await api.post(url, new URLSearchParams(dados), header);
     return resposta.data;
 };
 
 export const baixarArquivo = async (
-    url: string,
-    fileName: string,
-    header?: object
+  url: string,
+  fileName: string,
+  header?: object
 ) => {
     const response = await api.get(url, {
         ...header,
