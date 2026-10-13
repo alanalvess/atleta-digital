@@ -14,7 +14,7 @@ function FooterElement() {
         <div className='w-full flex flex-row justify-between items-center'>
           <FooterLinkGroup className="flex flex-col sm:flex-row gap-4 sm:gap-10">
             <Link to='/duvidas'>Dúvidas e Tutoriais</Link>
-            <Link to='/sobre'>Sobre o Dia A+</Link>
+            <Link to='/sobre'>Sobre o Atleta Digital</Link>
           </FooterLinkGroup>
 
         </div>
@@ -24,8 +24,8 @@ function FooterElement() {
         <div className="flex justify-center w-full">
           <Link to="/">
             <FooterCopyright
-              by='Dia A+™'
-              year={2025}
+              by='Atleta Digital™'
+              year={2026}
             />
           </Link>
         </div>
