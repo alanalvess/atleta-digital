@@ -8,8 +8,10 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,14 +27,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
+@AllArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    @Autowired
-    private JwtService jwtService;
-
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private final JwtService jwtService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -41,7 +42,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String path = request.getServletPath();
 
-        // 🔥 IGNORA ENDPOINT RFID
         if (path.startsWith("/rfid")) {
             filterChain.doFilter(request, response);
             return;
@@ -80,7 +80,17 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException |
                  ResponseStatusException e) {
+            log.warn("Falha na validação do token JWT: {}", e.getMessage());
+
             response.setStatus(HttpStatus.FORBIDDEN.value());
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setCharacterEncoding("UTF-8");
+
+            String jsonError = String.format(
+                    "{\"timestamp\":\"%s\",\"status\":403,\"erro\":\"Forbidden\",\"message\":\"Token JWT inválido ou expirado.\"}",
+                    java.time.LocalDateTime.now()
+            );
+            response.getWriter().write(jsonError);
         }
     }
 }

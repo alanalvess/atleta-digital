@@ -1,6 +1,6 @@
 package com.atletaoficial.atletadigitalbackend.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -31,22 +31,21 @@ public class BasicSecurityConfig {
     }
 
     @Bean
-    UserDetailsService userDetailsService() {
+    public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
     }
 
     @Bean
-    PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(userDetailsService);
-        authenticationProvider.setPasswordEncoder(passwordEncoder);
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(userDetailsService());
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
-
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
@@ -55,7 +54,7 @@ public class BasicSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationProvider authenticationProvider) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .sessionManagement(management -> management
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -64,18 +63,28 @@ public class BasicSecurityConfig {
 
         http
                 .authorizeHttpRequests(auth -> auth
+                        // 🔓 Rotas de documentação liberadas. Em produção (prod), o SpringDoc as ignorará por estar inativo no properties.
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html"
+                        ).permitAll()
+
                         .requestMatchers("/rfid/**").permitAll()
                         .requestMatchers("/usuarios/logar").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/usuarios/cadastrar").hasAnyAuthority("ADMIN", "TECNICO")
                         .requestMatchers("/error/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
+
+                        .requestMatchers(HttpMethod.POST, "/usuarios/cadastrar").hasAnyAuthority("ADMIN", "TECNICO")
                         .requestMatchers(HttpMethod.GET, "/usuarios/all").hasAnyAuthority("ADMIN", "TECNICO")
-                        .requestMatchers(HttpMethod.GET, "/presencas/turma/{id}").hasAuthority("PROFESSOR")
+
                         .requestMatchers(HttpMethod.PUT, "/usuarios/{id}").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/usuarios/{id}").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/usuarios/{id}").authenticated()
+
                         .anyRequest().authenticated())
-                .authenticationProvider(authenticationProvider) // Injeta a instância recebida no parâmetro
+
+                .authenticationProvider(authenticationProvider())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
