@@ -14,6 +14,8 @@ import {ToastContainer} from "react-toastify";
 import HomePublica from "./pages/home/homePublica/HomePublica.tsx";
 import Error500 from "./pages/errors/Error500.tsx";
 import Error404 from "./pages/errors/Error404.tsx";
+import Cadastro from "./pages/usuario/cadastro/Cadastro.tsx";
+import Perfil from "./pages/usuario/perfil/Perfil.tsx";
 
 function App() {
 
@@ -38,8 +40,9 @@ function App() {
                   <Route path='/duvidas' element={<Duvidas/>}/>
 
                   <Route path='/login' element={<Login/>}/>
+                  {/*<Route path='/cadastro' element={<Cadastro/>}/>*/}
 
-                  {/*<Route path="/meu-perfil" element={<Perfil/>}/>*/}
+                  <Route path="/meu-perfil" element={<Perfil/>}/>
                   <Route path="/usuarios" element={<ListarUsuarios/>}/>
 
                   <Route path='/erro' element={<Error500/>}/>
