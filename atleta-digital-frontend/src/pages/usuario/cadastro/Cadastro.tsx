@@ -7,6 +7,7 @@ import {ToastAlerta} from "../../../utils/ToastAlerta.ts";
 import {Roles} from "../../../enums/Roles.ts";
 import {useAuth} from "../../../contexts/UseAuth.ts";
 import {Toast} from "../../../enums/Toast.ts";
+import {Link, useNavigate} from "react-router-dom";
 
 interface CadastroProps {
   open: boolean;
@@ -187,3 +188,4 @@ function Cadastro({
 }
 
 export default Cadastro;
+

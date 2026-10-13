@@ -73,6 +73,17 @@ function Login() {
                 : <span>Entrar</span>
               }
             </Button>
+
+            <p className='mt-10'> Ainda não tem cadastro?</p>
+            <Button
+              type='submit'
+              className='w-1/2 cursor-pointer rounded bg-green-500 hover:bg-green-600 text-white py-2 flex justify-center focus:outline-none focus:ring-0 dark:bg-green-600 dark:hover:bg-green-700'
+            >
+              {isLoading ?
+                <Spinner size='md' light/>
+                : <span>Cadastre-se</span>
+              }
+            </Button>
           </form>
         </div>
       </div>
