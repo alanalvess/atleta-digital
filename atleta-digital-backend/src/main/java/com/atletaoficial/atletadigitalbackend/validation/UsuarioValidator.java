@@ -3,19 +3,17 @@ package com.atletaoficial.atletadigitalbackend.validation;
 import com.atletaoficial.atletadigitalbackend.entity.Usuario;
 import com.atletaoficial.atletadigitalbackend.enums.Role;
 import com.atletaoficial.atletadigitalbackend.repository.UsuarioRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 @Component
+@AllArgsConstructor
 public class UsuarioValidator {
 
     private final UsuarioRepository repository;
-
-    public UsuarioValidator(UsuarioRepository repository) {
-        this.repository = repository;
-    }
 
     public Boolean usuarioDesejaSerAdmin(Usuario usuario) {
         return usuario.getRoles().contains(Role.ADMIN);

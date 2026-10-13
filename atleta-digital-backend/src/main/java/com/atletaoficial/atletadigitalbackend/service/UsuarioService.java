@@ -10,6 +10,7 @@ import com.atletaoficial.atletadigitalbackend.mapper.UsuarioMapper;
 import com.atletaoficial.atletadigitalbackend.repository.UsuarioRepository;
 import com.atletaoficial.atletadigitalbackend.validation.EmailValidator;
 import com.atletaoficial.atletadigitalbackend.validation.UsuarioValidator;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@AllArgsConstructor
 public class UsuarioService {
 
     private final AdminProperties adminProperties;
@@ -30,25 +32,9 @@ public class UsuarioService {
     private final EmailValidator emailValidator;
     private final UsuarioValidator usuarioValidator;
 
-    public UsuarioService(
-            AdminProperties adminProperties,
-            UsuarioRepository repository,
-            PasswordEncoder encoder,
-            UsuarioMapper mapper,
-            EmailValidator emailValidator,
-            UsuarioValidator usuarioValidator
-    ) {
-        this.adminProperties = adminProperties;
-        this.repository = repository;
-        this.encoder = encoder;
-        this.mapper = mapper;
-        this.emailValidator = emailValidator;
-        this.usuarioValidator = usuarioValidator;
-    }
-
     public List<UsuarioResponse> listarTodos(String emailAutenticado) {
         Usuario usuarioLogado = repository.findByEmail(emailAutenticado)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário não encontrado"));
 
         boolean isAdminOuCoord = usuarioLogado.getRoles().contains(Role.ADMIN)
                 || usuarioLogado.getRoles().contains(Role.TECNICO);

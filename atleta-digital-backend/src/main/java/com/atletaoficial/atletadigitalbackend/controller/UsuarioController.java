@@ -8,6 +8,7 @@ import com.atletaoficial.atletadigitalbackend.entity.Usuario;
 import com.atletaoficial.atletadigitalbackend.service.AuthService;
 import com.atletaoficial.atletadigitalbackend.service.UsuarioService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.Map;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/usuarios")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -26,14 +28,6 @@ public class UsuarioController {
 
     private final UsuarioService service;
     private final AuthService auth;
-
-    public UsuarioController(
-            UsuarioService service,
-            AuthService auth
-    ) {
-        this.service = service;
-        this.auth = auth;
-    }
 
     @GetMapping("/all")
     public ResponseEntity<List<UsuarioResponse>> listarTodos(@AuthenticationPrincipal UserDetails userDetails) {

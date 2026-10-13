@@ -2,6 +2,7 @@ package com.atletaoficial.atletadigitalbackend.security;
 
 import com.atletaoficial.atletadigitalbackend.entity.Usuario;
 import com.atletaoficial.atletadigitalbackend.repository.UsuarioRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;

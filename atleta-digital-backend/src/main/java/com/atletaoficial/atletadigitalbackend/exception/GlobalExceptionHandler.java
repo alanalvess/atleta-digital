@@ -1,5 +1,6 @@
 package com.atletaoficial.atletadigitalbackend.exception;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -13,32 +14,38 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(UsuarioNaoEncontradoException.class)
     public ResponseEntity<Map<String, Object>> tratarUsuarioNaoEncontrado(UsuarioNaoEncontradoException ex) {
+        log.warn("Usuário não encontrado: {}", ex.getMessage());
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
     @ExceptionHandler(UsuarioNaoAutorizadoException.class)
     public ResponseEntity<Map<String, Object>> tratarUsuarioNaoAutorizado(UsuarioNaoAutorizadoException ex) {
+        log.warn("Acesso não autorizado: {}", ex.getMessage());
         return buildResponse(HttpStatus.UNAUTHORIZED, ex.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String, Object>> tratarIllegalArgument(IllegalArgumentException ex) {
+        log.warn("Argumento inválido: {}", ex.getMessage());
         return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<Map<String, Object>> tratarResponseStatusExceptionForbidden(ResponseStatusException ex) {
+        log.warn("Erro de status HTTP: {}", ex.getReason() != null ? ex.getReason() : ex.getMessage());
         return buildResponse(HttpStatus.FORBIDDEN, ex.getReason() != null ? ex.getReason() : ex.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
-        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno no servidor: " + ex.getMessage());
+        log.error("Erro interno inesperado no servidor: ", ex);
+        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Ocorreu um erro interno inesperado no servidor. Tente novamente mais tarde.");
     }
 
     @ExceptionHandler(DatasInvalidasException.class)
@@ -54,7 +61,6 @@ public class GlobalExceptionHandler {
                 .findFirst()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .orElse("Erro de validação");
-
         return buildResponse(HttpStatus.BAD_REQUEST, message);
     }
 

@@ -2,16 +2,14 @@ package com.atletaoficial.atletadigitalbackend.validation;
 
 import com.atletaoficial.atletadigitalbackend.exception.EmailJaCadastradoException;
 import com.atletaoficial.atletadigitalbackend.repository.UsuarioRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class EmailValidator {
 
     private final UsuarioRepository usuarioRepository;
-
-    public EmailValidator(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
-    }
 
     public void validarEmailUnico(String email) {
         if (usuarioRepository.findByEmail(email).isPresent()) {
