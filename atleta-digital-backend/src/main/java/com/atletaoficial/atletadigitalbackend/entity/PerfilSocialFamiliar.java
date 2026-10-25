@@ -3,16 +3,19 @@ package com.atletaoficial.atletadigitalbackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_perfil_social_familiar")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PerfilSocialFamiliar {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)

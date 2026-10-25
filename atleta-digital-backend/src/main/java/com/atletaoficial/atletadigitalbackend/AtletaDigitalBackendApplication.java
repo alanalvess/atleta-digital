@@ -9,5 +9,4 @@ public class AtletaDigitalBackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(AtletaDigitalBackendApplication.class, args);
     }
-
 }

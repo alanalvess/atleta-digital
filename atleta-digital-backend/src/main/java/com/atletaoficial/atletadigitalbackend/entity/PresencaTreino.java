@@ -4,16 +4,19 @@ import com.atletaoficial.atletadigitalbackend.enums.StatusPresenca;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_presenca_treino")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PresencaTreino {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -4,16 +4,19 @@ import com.atletaoficial.atletadigitalbackend.enums.TurnoEscolar;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_matricula_escolar")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class MatriculaEscolar {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

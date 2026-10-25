@@ -8,26 +8,29 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_usuarios")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @NotNull(message = "O atributo Nome é obrigatório!")
@@ -41,6 +44,17 @@ public class Usuario {
     @NotBlank(message = "O atributo Senha é obrigatório!")
     @Size(min = 8, message = "A Senha deve ter no mínimo 8 caracteres")
     private String senha;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime dataCriacao;
+
+    @UpdateTimestamp
+    private LocalDateTime dataAtualizacao;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private Boolean ativo = true;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id"))

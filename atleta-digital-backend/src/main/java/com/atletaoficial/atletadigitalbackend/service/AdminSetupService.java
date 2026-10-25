@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -25,6 +26,7 @@ public class AdminSetupService {
                     .nome(adminProperties.getAdminName())
                     .email(adminProperties.getAdminEmail())
                     .senha(encoder.encode(adminProperties.getAdminPassword()))
+                    .ativo(true)
                     .roles(List.of(Role.ADMIN))
                     .build();
             repository.save(admin);

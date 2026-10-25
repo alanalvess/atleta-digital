@@ -5,21 +5,29 @@ import com.atletaoficial.atletadigitalbackend.enums.PeDominante;
 import com.atletaoficial.atletadigitalbackend.enums.Posicao;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_atletas")
+@SQLRestriction("ativo = true")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Atleta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(nullable = false)
@@ -48,16 +56,20 @@ public class Atleta {
     private LocalDate dataIngresso;
     private String codigoMatricula;
 
-    @OneToOne(mappedBy = "atleta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "equipe_id")
+    private Equipe equipe;
+
+    @OneToOne(mappedBy = "atleta", cascade = CascadeType.ALL)
     private ResponsavelLegal responsavelLegal;
 
-    @OneToOne(mappedBy = "atleta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "atleta", cascade = CascadeType.ALL)
     private PerfilSocialFamiliar perfilSocialFamiliar;
 
-    @OneToOne(mappedBy = "atleta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "atleta", cascade = CascadeType.ALL)
     private ContratoFinanceiro contratoFinanceiro;
 
-    @OneToOne(mappedBy = "atleta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "atleta", cascade = CascadeType.ALL)
     private ProntuarioBase prontuarioBase;
 
     @OneToMany(mappedBy = "atleta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -86,6 +98,17 @@ public class Atleta {
 
     @OneToMany(mappedBy = "atleta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ControleNegociacao> controlesNegociacao = new ArrayList<>();
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime dataCriacao;
+
+    @UpdateTimestamp
+    private LocalDateTime dataAtualizacao;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private Boolean ativo = true;
 
     public Integer calcularIdade() {
         if (dataNascimento == null) return null;
