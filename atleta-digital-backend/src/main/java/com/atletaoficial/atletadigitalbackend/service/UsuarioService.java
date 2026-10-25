@@ -155,7 +155,6 @@ public class UsuarioService {
     }
 
 
-
     public void deletar(Long id, String email) {
         Usuario usuarioAutenticado = repository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário autenticado não encontrado"));
