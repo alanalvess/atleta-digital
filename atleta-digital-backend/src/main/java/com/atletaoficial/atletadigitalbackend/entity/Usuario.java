@@ -52,14 +52,25 @@ public class Usuario {
     }
 
     public boolean podeSerExcluido(Usuario usuarioAutenticado, String adminEmail) {
-        if (this.getEmail().equals(adminEmail)) {return false;}
-        if (this.getId().equals(usuarioAutenticado.getId())) {return true;}
-        if (usuarioAutenticado.getEmail().equals(adminEmail)) {return true;}
+        if (this.getEmail().equals(adminEmail)) {
+            return false;
+        }
+
+        if (this.getId().equals(usuarioAutenticado.getId())) {
+            return true;
+        }
+
+        if (usuarioAutenticado.getEmail().equals(adminEmail)) {
+            return true;
+        }
 
         boolean ehAdminOuTecnico = usuarioAutenticado.getRoles().contains(Role.ADMIN)
                 || usuarioAutenticado.getRoles().contains(Role.TECNICO);
 
-        if (ehAdminOuTecnico) {return true;}
+        if (ehAdminOuTecnico) {
+            return true;
+        }
+
         return false;
     }
 
@@ -93,11 +104,11 @@ public class Usuario {
                         List<Role> novasRoles = lista.stream()
                                 .map(String::valueOf)
                                 .map(Role::valueOf)
-                                .toList(); // ⚠ toList() cria lista imutável
+                                .toList();
 
                         if (!novasRoles.isEmpty()) {
                             validarAtualizacaoRoles(novasRoles, usuarioLogado);
-                            this.roles = new ArrayList<>(novasRoles); // ✅ lista mutável para JPA
+                            this.roles = new ArrayList<>(novasRoles);
                         }
                     }
                 }
