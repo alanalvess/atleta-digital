@@ -124,7 +124,7 @@ export default function ListarAtletas() {
         </div>
 
         <div
-          className="hidden md:block overflow-x-auto min-h-[55vh] rounded-lg shadow-md border border-gray-200 dark:border-gray-700 pb-10">
+          className="overflow-x-auto min-h-[55vh] rounded-lg shadow-md border border-gray-200 dark:border-gray-700 pb-10">
           <Table hoverable>
             <TableHead>
               <TableHeadCell className="text-center font-semibold">Atleta</TableHeadCell>
@@ -158,7 +158,7 @@ export default function ListarAtletas() {
                   </TableCell>
 
                   <TableCell className="text-center text-gray-900 dark:text-gray-100">
-                    <div className="flex justify-center items-center gap-2 flex-wrap">
+                    <div className="flex justify-center items-center gap-2">
 
                       <Button
                         className="cursor-pointer text-yellow-500 hover:text-yellow-700 dark:hover:text-yellow-400 focus:outline-none focus:ring-0"
@@ -314,29 +314,65 @@ export default function ListarAtletas() {
 
         {atletaSelecionado && (
           <>
-            <GerenciarProntuario isOpen={modalProntuario} onClose={() => setModalProntuario(false)}
-                                 atleta={atletaSelecionado}/>
-            <GerenciarAtendimentosMedicos isOpen={modalAtendimentos} onClose={() => setModalAtendimentos(false)}
-                                          atleta={atletaSelecionado}/>
-            <GerenciarExamesAptidao isOpen={modalExames} onClose={() => setModalExames(false)}
-                                    atleta={atletaSelecionado}/>
+            <GerenciarProntuario
+              isOpen={modalProntuario}
+              onClose={() => setModalProntuario(false)}
+              atleta={atletaSelecionado}
+            />
 
-            <GerenciarResponsavel isOpen={modalResponsavel} onClose={() => setModalResponsavel(false)}
-                                  atleta={atletaSelecionado}/>
-            <GerenciarPerfilSocial isOpen={modalPerfilSocial} onClose={() => setModalPerfilSocial(false)}
-                                   atleta={atletaSelecionado}/>
-            <GerenciarMatriculasEscolares isOpen={modalMatriculas} onClose={() => setModalMatriculas(false)}
-                                          atleta={atletaSelecionado}/>
+            <GerenciarAtendimentosMedicos
+              isOpen={modalAtendimentos}
+              onClose={() => setModalAtendimentos(false)}
+              atleta={atletaSelecionado}
+            />
 
-            <GerenciarContrato isOpen={modalContrato} onClose={() => setModalContrato(false)}
-                               atleta={atletaSelecionado}/>
-            <GerenciarMovimentacoes isOpen={modalMovimentacoes} onClose={() => setModalMovimentacoes(false)}
-                                    atleta={atletaSelecionado}/>
+            <GerenciarExamesAptidao
+              isOpen={modalExames}
+              onClose={() => setModalExames(false)}
+              atleta={atletaSelecionado}
+            />
 
-            <GerenciarAvaliacoes isOpen={modalAvaliacoes} onClose={() => setModalAvaliacoes(false)}
-                                 atleta={atletaSelecionado}/>
-            <GerenciarTransicoes isOpen={modalTransicoes} onClose={() => setModalTransicoes(false)}
-                                 atleta={atletaSelecionado}/>
+            <GerenciarResponsavel
+              isOpen={modalResponsavel}
+              onClose={() => setModalResponsavel(false)}
+              atleta={atletaSelecionado}
+            />
+
+            <GerenciarPerfilSocial
+              isOpen={modalPerfilSocial}
+              onClose={() => setModalPerfilSocial(false)}
+              atleta={atletaSelecionado}
+            />
+
+            <GerenciarMatriculasEscolares
+              isOpen={modalMatriculas}
+              onClose={() => setModalMatriculas(false)}
+              atleta={atletaSelecionado}
+            />
+
+            <GerenciarContrato
+              isOpen={modalContrato}
+              onClose={() => setModalContrato(false)}
+              atleta={atletaSelecionado}
+            />
+
+            <GerenciarMovimentacoes
+              isOpen={modalMovimentacoes}
+              onClose={() => setModalMovimentacoes(false)}
+              atleta={atletaSelecionado}
+            />
+
+            <GerenciarAvaliacoes
+              isOpen={modalAvaliacoes}
+              onClose={() => setModalAvaliacoes(false)}
+              atleta={atletaSelecionado}
+            />
+
+            <GerenciarTransicoes
+              isOpen={modalTransicoes}
+              onClose={() => setModalTransicoes(false)}
+              atleta={atletaSelecionado}
+            />
           </>
         )}
       </div>
