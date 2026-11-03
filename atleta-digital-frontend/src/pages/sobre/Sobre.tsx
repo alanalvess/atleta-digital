@@ -11,8 +11,7 @@ function Sobre() {
           Sobre Nosso Sistema
         </h1>
         <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          Uma solução pensada para facilitar a gestão acadêmica e o acompanhamento
-          de alunos.
+          Uma solução pensada para facilitar a gestão.
         </p>
       </header>
 
@@ -27,9 +26,7 @@ function Sobre() {
         <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
           Este projeto nasceu como um trabalho acadêmico, desenvolvido com o
           objetivo de aplicar conhecimentos em desenvolvimento de sistemas e
-          gestão escolar. Durante o processo, o sistema evoluiu para uma ferramenta
-          funcional, capaz de auxiliar coordenações, professores, alunos e
-          responsáveis em suas atividades diárias.
+          gestão.
         </p>
       </section>
 
@@ -42,8 +39,7 @@ function Sobre() {
           </h2>
         </div>
         <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-          O principal objetivo do sistema é centralizar informações acadêmicas,
-          permitindo que responsáveis, alunos e coordenadores tenham acesso rápido
+          O principal objetivo do sistema é centralizar informações e tenham acesso rápido
           e confiável a dados sobre notas, frequência e observações. A proposta é
           tornar a gestão escolar mais eficiente e a comunicação mais transparente.
         </p>

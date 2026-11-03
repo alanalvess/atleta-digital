@@ -1,94 +1,79 @@
-import React, {type ChangeEvent, useEffect, useState} from 'react'
+import React, {type ChangeEvent, type SyntheticEvent, useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 
-import {Button, Card, Spinner, TextInput} from 'flowbite-react';
+import {Button, Card, Spinner} from 'flowbite-react';
 import type {UsuarioLogin} from "../../models/UsuarioLogin.ts";
 import {useAuth} from "../../contexts/UseAuth.ts";
+import TextInputField from "../../components/form/TextInputField.tsx";
 
-function Login() {
+export default function Login() {
 
   const navigate = useNavigate();
+  const {handleLogin, isLoading, isAuthenticated} = useAuth();
 
-  const {usuario, handleLogin, isLoading, isAuthenticated} = useAuth();
-  const [usuarioLogin, setUsuarioLogin] = useState<UsuarioLogin>({} as UsuarioLogin);
-
-  function login(e: ChangeEvent<HTMLFormElement>) {
-    e.preventDefault();
-    handleLogin(usuarioLogin);
-  }
+  const [usuarioLogin, setUsuarioLogin] = useState<Partial<UsuarioLogin>>({});
 
   function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
     setUsuarioLogin({
       ...usuarioLogin,
       [e.target.name]: e.target.value
-    })
+    });
+  }
+
+  async function login(e: SyntheticEvent<HTMLFormElement>) {
+    e.preventDefault();
+    await handleLogin(usuarioLogin);
   }
 
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/home');
     }
-  }, [usuario]);
+  }, [isAuthenticated, navigate]);
 
   return (
     <>
-      <div className='pt-40'>
+      <div className='pt-32 pb-20 px-4 min-h-screen flex justify-center items-start'>
+        <Card className="w-full max-w-md shadow-lg border-gray-200 dark:bg-gray-800 p-4">
+          <h2 className="text-4xl font-semibold text-center text-gray-900 dark:text-gray-100 mb-6">
+            Entrar
+          </h2>
 
-        <div className='flex justify-center lg:mx-[20vw] font-bold border-gray-200 rounded-lg lg:shadow-lg'>
-          <form
-            className='flex justify-center items-center flex-col w-2/3 gap-3 py-10'
-            onSubmit={login}
-          >
-            <Card className="mb-6 bg-gray-100 w-full dark:bg-gray-800 text-center shadow-md">
-              <h2 className="text-5xl font-semibold text-gray-900 dark:text-gray-100">
-                Entrar
-              </h2>
-            </Card>
+          <form className="flex flex-col gap-4" onSubmit={login}>
 
-            <TextInput
-              className="w-full"
-              placeholder='E-mail'
-              name='email'
-              value={usuarioLogin.email}
+            <TextInputField
+              label="E-mail"
+              name="email"
+              type="email"
+              placeholder="Digite seu e-mail"
+              value={usuarioLogin.email || ""}
               onChange={atualizarEstado}
               required
             />
 
-            <TextInput
-              className="w-full"
-              placeholder='Senha'
-              name='senha'
-              type='password'
-              value={usuarioLogin.senha}
+            <TextInputField
+              label="Senha"
+              name="senha"
+              type="password"
+              placeholder="Digite sua senha"
+              value={usuarioLogin.senha || ""}
               onChange={atualizarEstado}
               required
             />
 
             <Button
-              type='submit'
-              className='w-1/2 mt-6 cursor-pointer rounded bg-green-500 hover:bg-green-600 text-white py-2 flex justify-center focus:outline-none focus:ring-0 dark:bg-green-600 dark:hover:bg-green-700'
+              type="submit"
+              color="green"
+              className="w-full mt-4 cursor-pointer focus:outline-none focus:ring-0"
+              disabled={isLoading}
             >
-              {isLoading ?
-                <Spinner size='md' light/>
-                : <span>Entrar</span>
-              }
+              {isLoading ? <Spinner size="sm" className="mr-2" light/> : null}
+              Acessar Plataforma
             </Button>
 
-            <p className='mt-10'> Ainda não tem cadastro?</p>
-            <Button
-              type='submit'
-              className='w-1/2 cursor-pointer rounded bg-green-500 hover:bg-green-600 text-white py-2 flex justify-center focus:outline-none focus:ring-0 dark:bg-green-600 dark:hover:bg-green-700'
-            >
-              {isLoading ?
-                <Spinner size='md' light/>
-                : <span>Cadastre-se</span>
-              }
-            </Button>
           </form>
-        </div>
+        </Card>
       </div>
     </>
   )
 }
-
-export default Login;

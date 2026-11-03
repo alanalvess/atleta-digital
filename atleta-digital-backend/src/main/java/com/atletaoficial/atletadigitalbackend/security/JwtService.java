@@ -1,6 +1,5 @@
 package com.atletaoficial.atletadigitalbackend.security;
 
-
 import com.atletaoficial.atletadigitalbackend.enums.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

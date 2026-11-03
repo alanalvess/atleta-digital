@@ -30,35 +30,50 @@ public class UsuarioController {
     private final AuthService auth;
 
     @GetMapping("/all")
-    public ResponseEntity<List<UsuarioResponse>> listarTodos(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<List<UsuarioResponse>> listarTodos(
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
         String email = userDetails.getUsername();
         return ResponseEntity.ok(service.listarTodos(email));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioResponse> buscarPorId(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<UsuarioResponse> buscarPorId(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
         String email = userDetails.getUsername();
         return ResponseEntity.status(HttpStatus.OK).body(service.buscarPorId(id, email));
     }
 
     @GetMapping("/buscar/{nome}")
-    public ResponseEntity<List<UsuarioResponse>> buscarPorNome(@PathVariable String nome) {
+    public ResponseEntity<List<UsuarioResponse>> buscarPorNome(
+            @PathVariable String nome
+    ) {
         return ResponseEntity.status(HttpStatus.OK).body(service.buscarPorNome(nome));
     }
 
     @GetMapping("/email")
-    public ResponseEntity<UsuarioResponse> buscarPorEmail(@RequestParam String email, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<UsuarioResponse> buscarPorEmail(
+            @RequestParam String email,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
         String emailAutenticado = userDetails.getUsername();
         return ResponseEntity.ok(service.buscarPorEmail(email, emailAutenticado));
     }
 
     @PostMapping("/logar")
-    public ResponseEntity<UsuarioResponse> autenticarUsuario(@RequestBody UsuarioLoginRequest usuarioLoginRequest) {
+    public ResponseEntity<UsuarioResponse> autenticarUsuario(
+            @RequestBody UsuarioLoginRequest usuarioLoginRequest
+    ) {
         return ResponseEntity.ok(auth.autenticarUsuario(usuarioLoginRequest));
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<UsuarioResponse> cadastrarUsuario(@RequestBody @Valid UsuarioRequest usuarioRequest, Authentication authentication) {
+    public ResponseEntity<UsuarioResponse> cadastrarUsuario(
+            @RequestBody @Valid UsuarioRequest usuarioRequest,
+            Authentication authentication
+    ) {
         UsuarioResponse resposta = service.cadastrar(usuarioRequest, authentication);
         return ResponseEntity.status(HttpStatus.CREATED).body(resposta);
     }
@@ -113,7 +128,10 @@ public class UsuarioController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<Void> deletar(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
         String email = userDetails.getUsername();
         service.deletar(id, email);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

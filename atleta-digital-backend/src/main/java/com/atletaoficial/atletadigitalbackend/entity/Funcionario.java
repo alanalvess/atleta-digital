@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -40,6 +41,8 @@ public class Funcionario {
     private Cargo cargo;
 
     private String registroProfissional;
+
+    private LocalDate dataContratacao;
 
     @CreationTimestamp
     @Column(updatable = false)

@@ -4,6 +4,7 @@ import com.atletaoficial.atletadigitalbackend.enums.AptidaoFisica;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_exame_aptidao")
+@SQLRestriction("ativo = true")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ExameAptidao {
 
@@ -28,7 +30,9 @@ public class ExameAptidao {
     @JoinColumn(name = "atleta_id")
     private Atleta atleta;
 
+    @Column(nullable = false)
     private LocalDate dataExame;
+
     private LocalDate validade;
     private Double peso;
     private Double altura;
@@ -36,6 +40,7 @@ public class ExameAptidao {
     private Double pressaoArterial;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private AptidaoFisica aptidao;
 
     @CreationTimestamp
@@ -44,4 +49,8 @@ public class ExameAptidao {
 
     @UpdateTimestamp
     private LocalDateTime dataAtualizacao;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private Boolean ativo = true;
 }

@@ -1,11 +1,10 @@
-import {type ReactNode, useEffect, useState} from 'react'
-
-import {ToastAlerta} from '../utils/ToastAlerta'
-import {login} from '../services/Service'
-import type {UsuarioLogin} from "../models/UsuarioLogin.ts";
-import {jwtDecode} from "jwt-decode";
-import {AuthContext} from "./AuthContext";
-import {Toast} from "../enums/Toast.ts";
+import { type ReactNode, useEffect, useState } from 'react';
+import { ToastAlerta } from '../utils/ToastAlerta';
+import type { UsuarioLogin } from "../models/UsuarioLogin";
+import { jwtDecode } from "jwt-decode";
+import { AuthContext } from "./AuthContext";
+import { Toast } from "../enums/Toast";
+import { UsuarioService } from '../services/UsuarioService.ts';
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -17,10 +16,8 @@ interface JwtPayload {
   sub?: string;
 }
 
-export function AuthProvider({children}: AuthProviderProps) {
-
+export function AuthProvider({ children }: AuthProviderProps) {
   const [usuario, setUsuario] = useState<UsuarioLogin | null>(null);
-
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isHydrated, setIsHydrated] = useState<boolean>(false);
@@ -36,21 +33,23 @@ export function AuthProvider({children}: AuthProviderProps) {
     }
   }
 
-  async function handleLogin(userLogin: UsuarioLogin) {
+  async function handleLogin(userLogin: Partial<UsuarioLogin>) {
     setIsLoading(true);
     try {
-      await login(`/usuarios/logar`, userLogin, (usuarioRetornado: UsuarioLogin) => {
-        if (isTokenValido(usuarioRetornado.token)) {
-          setUsuario(usuarioRetornado);
-          setIsAuthenticated(true);
-          localStorage.setItem("usuario", JSON.stringify(usuarioRetornado));
-          ToastAlerta("Seja bem-vindo!", Toast.Success);
-        } else {
-          ToastAlerta("Token inválido ou expirado", Toast.Warning);
-        }
-      });
+      // Consome o serviço refatorado com tipagem estrita
+      const usuarioRetornado = await UsuarioService.login(userLogin);
+
+      if (isTokenValido(usuarioRetornado.token)) {
+        setUsuario(usuarioRetornado);
+        setIsAuthenticated(true);
+        localStorage.setItem("usuario", JSON.stringify(usuarioRetornado));
+        ToastAlerta("Seja bem-vindo!", Toast.Success);
+      } else {
+        ToastAlerta("Token inválido ou expirado", Toast.Warning);
+      }
     } catch (error: any) {
-      if (error.response?.status === 401 || error.response?.status === 404) {
+      // Intercepta falhas de credencial (401/403/404) para dar feedback imediato no login
+      if (error.response?.status === 401 || error.response?.status === 404 || error.response?.status === 403) {
         ToastAlerta("Usuário ou senha inválidos", Toast.Warning);
       } else {
         ToastAlerta("Erro inesperado ao tentar fazer login", Toast.Error);
@@ -67,6 +66,7 @@ export function AuthProvider({children}: AuthProviderProps) {
     localStorage.removeItem("usuario");
   }
 
+  // Hidratação ao carregar a página
   useEffect(() => {
     const usuarioSalvo = localStorage.getItem("usuario");
     if (usuarioSalvo) {
@@ -81,32 +81,36 @@ export function AuthProvider({children}: AuthProviderProps) {
     setIsHydrated(true);
   }, []);
 
+  // Logout proativo baseado no tempo de expiração (exp) do JWT
   useEffect(() => {
     if (!usuario?.token) return;
 
-    const decoded = jwtDecode<JwtPayload>(usuario.token);
-    if (!decoded.exp) return;
+    try {
+      const decoded = jwtDecode<JwtPayload>(usuario.token);
+      if (!decoded.exp) return;
 
-    const tempoRestante = decoded.exp * 1000 - Date.now();
-    const timeout = setTimeout(() => {
-      ToastAlerta("Sessão expirada. Faça login novamente.", Toast.Warning);
+      const tempoRestante = decoded.exp * 1000 - Date.now();
+
+      const timeout = setTimeout(() => {
+        ToastAlerta("Sessão expirada. Faça login novamente.", Toast.Warning);
+        handleLogout();
+      }, tempoRestante);
+
+      return () => clearTimeout(timeout);
+    } catch (error) {
       handleLogout();
-    }, tempoRestante);
-
-    return () => clearTimeout(timeout);
+    }
   }, [usuario]);
 
   return (
-    <AuthContext.Provider
-      value={{
-        usuario,
-        isAuthenticated,
-        isLoading,
-        isHydrated,
-        handleLogin,
-        handleLogout,
-      }}
-    >
+    <AuthContext.Provider value={{
+      usuario,
+      isAuthenticated,
+      isLoading,
+      isHydrated,
+      handleLogin,
+      handleLogout,
+    }}>
       {children}
     </AuthContext.Provider>
   );

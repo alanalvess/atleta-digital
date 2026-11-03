@@ -1,0 +1,8 @@
+export enum Posicao {
+  GOLEIRO = 'GOLEIRO',
+  ZAGUEIRO = 'ZAGUEIRO',
+  LATERAL = 'LATERAL',
+  VOLANTE = 'VOLANTE',
+  MEIO_CAMPO = 'MEIO_CAMPO',
+  ATACANTE = 'ATACANTE'
+}

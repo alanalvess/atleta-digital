@@ -72,6 +72,9 @@ public class Atleta {
     @OneToOne(mappedBy = "atleta", cascade = CascadeType.ALL)
     private ProntuarioBase prontuarioBase;
 
+    @OneToOne(mappedBy = "atleta", cascade = CascadeType.ALL)
+    private CartaoAcesso cartaoAcesso;
+
     @OneToMany(mappedBy = "atleta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<MovimentacaoFinanceira> movimentacoesFinanceiras = new ArrayList<>();
 

@@ -1,11 +1,11 @@
 
 import {useState} from "react";
-import {Roles} from "../../enums/Roles.ts";
+import {Role} from "../../enums/Role.ts";
 
 function Duvidas() {
-  const [usuarioTipo, setUsuarioTipo] = useState<Roles>();
+  const [usuarioTipo, setUsuarioTipo] = useState<Role>();
 
-  const tipos: Roles[] = [Roles.COORDENADOR, Roles.PROFESSOR, Roles.RESPONSAVEL];
+  const tipos: Role[] = [Role.TECNICO, Role.RESPONSAVEL];
 
 
   return (
@@ -19,7 +19,7 @@ function Duvidas() {
         {tipos.map((tipo) => (
           <button
             key={tipo}
-            onClick={() => setUsuarioTipo(tipo as Roles)}
+            onClick={() => setUsuarioTipo(tipo as Role)}
             className={`px-4 py-2 rounded-lg font-semibold ${
               usuarioTipo === tipo
                 ? "bg-green-500 text-white"

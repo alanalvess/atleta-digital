@@ -2,6 +2,11 @@ package com.atletaoficial.atletadigitalbackend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -10,6 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_perfil_social_familiar")
+@SQLRestriction("ativo = true")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PerfilSocialFamiliar {
 
@@ -28,6 +34,21 @@ public class PerfilSocialFamiliar {
     private String tipoMoradia;
     private String meioTransporteTreino;
     private Integer tempoDeslocamentoMinutos;
+
+    @Column(nullable = false)
     private Boolean dificuldadeAlimentacao;
+
+    @Column(columnDefinition = "TEXT")
     private String necessidadesApoio;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime dataCriacao;
+
+    @UpdateTimestamp
+    private LocalDateTime dataAtualizacao;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private Boolean ativo = true;
 }

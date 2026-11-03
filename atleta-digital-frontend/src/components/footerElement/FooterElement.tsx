@@ -1,13 +1,8 @@
 import {Footer, FooterCopyright, FooterDivider, FooterLinkGroup} from 'flowbite-react';
 
-import {CiCalculator2} from "react-icons/ci";
-import {useState} from "react";
 import {Link} from "react-router-dom";
 
-function FooterElement() {
-  const [isOpen, setIsOpen] = useState(false);
-  const handleClose = () => setIsOpen(false);
-
+export default function FooterElement() {
   return (
     <Footer container className='rounded-none bg-gray-300 w-full overflow-x-auto'>
       <div className='w-full px-4'>
@@ -33,5 +28,3 @@ function FooterElement() {
     </Footer>
   );
 }
-
-export default FooterElement;

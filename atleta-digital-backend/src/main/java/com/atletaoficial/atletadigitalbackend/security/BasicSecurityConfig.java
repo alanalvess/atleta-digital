@@ -62,13 +62,13 @@ public class BasicSecurityConfig {
 
         http
                 .authorizeHttpRequests(auth -> auth
-                        // 🔓 Rotas de documentação liberadas. Em produção (prod), o SpringDoc as ignorará por estar inativo no properties.
                         .requestMatchers(
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html"
                         ).permitAll()
 
+                        .requestMatchers("/acesso-hardware/**").permitAll()
                         .requestMatchers("/rfid/**").permitAll()
                         .requestMatchers("/usuarios/logar").permitAll()
                         .requestMatchers("/error/**").permitAll()

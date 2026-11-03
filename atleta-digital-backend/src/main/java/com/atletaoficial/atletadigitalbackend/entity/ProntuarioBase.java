@@ -2,6 +2,11 @@ package com.atletaoficial.atletadigitalbackend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLRestriction;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -10,6 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_prontuario_base")
+@SQLRestriction("ativo = true")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ProntuarioBase {
 
@@ -35,4 +41,15 @@ public class ProntuarioBase {
 
     @Column(columnDefinition = "TEXT")
     private String medicamentosUsoContinuo;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime dataCriacao;
+
+    @UpdateTimestamp
+    private LocalDateTime dataAtualizacao;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private Boolean ativo = true;
 }

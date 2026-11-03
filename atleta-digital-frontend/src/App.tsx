@@ -1,23 +1,14 @@
 import './App.css'
 import {AuthProvider} from "./contexts/AuthProvider.tsx";
 import NavbarElement from "./components/navbarElement/NavbarElement.tsx";
-import Home from "./pages/home/Home.tsx";
-import Login from "./pages/login/Login.tsx";
-import ListarUsuarios from "./pages/usuario/usuarios/ListarUsuarios.tsx";
-import Sobre from "./pages/sobre/Sobre.tsx";
-import Duvidas from "./pages/duvidas/Duvidas.tsx";
 
 import FooterElement from "./components/footerElement/FooterElement.tsx";
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {ToastContainer} from "react-toastify";
 
-import HomePublica from "./pages/home/homePublica/HomePublica.tsx";
-import Error500 from "./pages/errors/Error500.tsx";
-import Error404 from "./pages/errors/Error404.tsx";
-import Cadastro from "./pages/usuario/cadastro/Cadastro.tsx";
-import Perfil from "./pages/usuario/perfil/Perfil.tsx";
+import {AppRoutes} from "./routes/AppRoutes.tsx";
 
-function App() {
+export default function App() {
 
   return (
       <>
@@ -30,25 +21,7 @@ function App() {
 
               <NavbarElement/>
               <div className='dark:bg-gray-500 min-h-[90vh]'>
-
-                <Routes>
-
-                  <Route path='/' element={<HomePublica/>}/>
-                  <Route path='/home' element={<Home/>}/>
-
-                  <Route path='/sobre' element={<Sobre/>}/>
-                  <Route path='/duvidas' element={<Duvidas/>}/>
-
-                  <Route path='/login' element={<Login/>}/>
-                  {/*<Route path='/cadastro' element={<Cadastro/>}/>*/}
-
-                  <Route path="/meu-perfil" element={<Perfil/>}/>
-                  <Route path="/usuarios" element={<ListarUsuarios/>}/>
-
-                  <Route path='/erro' element={<Error500/>}/>
-                  <Route path='*' element={<Error404/>}/>
-
-                </Routes>
+                <AppRoutes />
               </div>
 
               <div className='relative w-full '>
@@ -61,5 +34,3 @@ function App() {
       </>
   )
 }
-
-export default App

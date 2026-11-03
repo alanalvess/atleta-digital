@@ -141,7 +141,6 @@ public class UsuarioService {
         Usuario usuario = repository.findById(id)
                 .orElseThrow(() -> new UsuarioNaoEncontradoException("ID: " + id));
 
-        // ⚠️ Garante que só o próprio usuário (ou admin) possa alterar a senha
         if (!usuario.getId().equals(usuarioLogado.getId())) {
             throw new PermissaoNegadaException("Você não pode alterar a senha de outro usuário.");
         }

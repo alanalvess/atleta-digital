@@ -3,6 +3,7 @@ package com.atletaoficial.atletadigitalbackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_avaliacao_desempenho")
+@SQLRestriction("ativo = true")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class AvaliacaoDesempenho {
 
@@ -52,4 +54,14 @@ public class AvaliacaoDesempenho {
 
     @UpdateTimestamp
     private LocalDateTime dataAtualizacao;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private Boolean ativo = true;
+
+    public void calcularMediaGeral() {
+        if (notaPasse != null && notaFinalizacao != null && notaDrible != null && notaMarcacao != null) {
+            this.mediaGeral = (notaPasse + notaFinalizacao + notaDrible + notaMarcacao) / 4.0;
+        }
+    }
 }

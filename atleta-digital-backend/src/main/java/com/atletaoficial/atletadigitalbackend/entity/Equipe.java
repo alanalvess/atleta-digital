@@ -3,6 +3,10 @@ package com.atletaoficial.atletadigitalbackend.entity;
 import com.atletaoficial.atletadigitalbackend.enums.Categoria;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,4 +40,15 @@ public class Equipe {
 
     @OneToMany(mappedBy = "equipe", fetch = FetchType.LAZY)
     private List<Atleta> atletas = new ArrayList<>();
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime dataCriacao;
+
+    @UpdateTimestamp
+    private LocalDateTime dataAtualizacao;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private Boolean ativo = true;
 }

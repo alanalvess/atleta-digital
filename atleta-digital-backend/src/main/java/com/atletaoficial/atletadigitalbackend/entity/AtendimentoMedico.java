@@ -3,6 +3,7 @@ package com.atletaoficial.atletadigitalbackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_atendimento_medico")
+@SQLRestriction("ativo = true")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class AtendimentoMedico {
 
@@ -27,10 +29,18 @@ public class AtendimentoMedico {
     @JoinColumn(name = "atleta_id")
     private Atleta atleta;
 
+    @Column(nullable = false)
     private LocalDate dataAtendimento;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String queixaLesao;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String conduta;
+
     private Integer diasAfastamento;
+
+    @Column(nullable = false)
     private Boolean liberadoParaTreino;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -43,4 +53,8 @@ public class AtendimentoMedico {
 
     @UpdateTimestamp
     private LocalDateTime dataAtualizacao;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private Boolean ativo = true;
 }

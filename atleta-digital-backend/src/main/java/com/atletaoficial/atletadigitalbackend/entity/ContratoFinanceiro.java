@@ -3,6 +3,7 @@ package com.atletaoficial.atletadigitalbackend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_contrato_financeiro")
+@SQLRestriction("ativo = true")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ContratoFinanceiro {
 
@@ -27,9 +29,13 @@ public class ContratoFinanceiro {
     @JoinColumn(name = "atleta_id")
     private Atleta atleta;
 
-    private String tipoVinculo; // GRATUITO, MENSALIDADE, BOLSA
+    @Column(nullable = false)
+    private String tipoVinculo;
+
     private BigDecimal valorAcordado;
     private Integer diaVencimento;
+
+    @Column(nullable = false)
     private Boolean isento;
 
     @Column(columnDefinition = "TEXT")
@@ -41,4 +47,8 @@ public class ContratoFinanceiro {
 
     @UpdateTimestamp
     private LocalDateTime dataAtualizacao;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private Boolean ativo = true;
 }
