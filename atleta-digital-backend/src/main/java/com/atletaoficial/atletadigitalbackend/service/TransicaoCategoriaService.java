@@ -62,6 +62,42 @@ public class TransicaoCategoriaService {
     }
 
     @Transactional
+    public TransicaoCategoriaResponse atualizar(Long id, TransicaoCategoriaRequest request) {
+        TransicaoCategoria transicao = transicaoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Registro de transição não encontrado."));
+
+        transicao.setTemporada(request.temporada());
+        transicao.setNovaCategoria(request.novaCategoria());
+        transicao.setDataTransicao(request.dataTransicao());
+        transicao.setParecerComissaoAnterior(request.parecerComissaoAnterior());
+        transicao.setParecerComissaoNova(request.parecerComissaoNova());
+        transicao.setMotivoTransicao(request.motivoTransicao());
+
+        if (request.aprovadoTreinadorAnterior() != null) transicao.setAprovadoTreinadorAnterior(request.aprovadoTreinadorAnterior());
+        if (request.aprovadoTreinadorNovo() != null) transicao.setAprovadoTreinadorNovo(request.aprovadoTreinadorNovo());
+        if (request.aprovadoCoordenadorTecnico() != null) transicao.setAprovadoCoordenadorTecnico(request.aprovadoCoordenadorTecnico());
+
+        boolean todasAprovadas = transicao.getAprovadoTreinadorAnterior() &&
+                transicao.getAprovadoTreinadorNovo() &&
+                transicao.getAprovadoCoordenadorTecnico();
+
+        if (todasAprovadas && !"APROVADA".equals(transicao.getStatus())) {
+            transicao.setStatus("APROVADA");
+
+            Atleta atleta = transicao.getAtleta();
+            atleta.setCategoria(transicao.getNovaCategoria());
+            atletaRepository.save(atleta);
+
+            log.info("Transição 100% aprovada! Atleta ID {} promovido para a categoria {}", atleta.getId(), atleta.getCategoria());
+        } else if (!todasAprovadas) {
+            transicao.setStatus(request.status() != null ? request.status() : "EM AVALIACAO");
+        }
+
+        TransicaoCategoria salva = transicaoRepository.save(transicao);
+        return mapper.toResponse(salva);
+    }
+
+    @Transactional
     public void inativar(Long id) {
         TransicaoCategoria transicao = transicaoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Registro de transição não encontrado."));

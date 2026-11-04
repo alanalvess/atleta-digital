@@ -22,6 +22,9 @@ public record TransicaoCategoriaResponse(
         String treinadorNovoNome,
         Long coordenadorTecnicoId,
         String coordenadorTecnicoNome,
+        Boolean aprovadoTreinadorAnterior,
+        Boolean aprovadoTreinadorNovo,
+        Boolean aprovadoCoordenadorTecnico,
         LocalDateTime dataCriacao,
         LocalDateTime dataAtualizacao,
         Boolean ativo

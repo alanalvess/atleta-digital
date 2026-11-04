@@ -28,11 +28,11 @@ const MENU_CONFIG: MenuGroup[] = [
     title: "Gestão do Clube",
     allowedRoles: [Role.COORDENADOR_TECNICO, Role.TECNICO, Role.DIRETOR, Role.PRESIDENTE],
     items: [
-      { to: "/dashboard", icon: FaChartBar, label: "Dashboard Geral" },
+      // { to: "/dashboard", icon: FaChartBar, label: "Dashboard Geral" },
       { to: "/atletas", icon: FaIdCard, label: "Gestão de Atletas" },
-      { to: "/financeiro", icon: FaWallet, label: "Financeiro Mensalidades" },
-      { to: "/saude", icon: FaHeartbeat, label: "Prontuários e Saúde" },
-      { to: "/treinos", icon: FaFutbol, label: "Gestão de Equipes" }
+      // { to: "/financeiro", icon: FaWallet, label: "Financeiro Mensalidades" },
+      // { to: "/saude", icon: FaHeartbeat, label: "Prontuários e Saúde" },
+      { to: "/treinos", icon: FaFutbol, label: "Gestão de Treinos" }
     ]
   },
   {
@@ -40,8 +40,8 @@ const MENU_CONFIG: MenuGroup[] = [
     allowedRoles: [Role.TREINADOR, Role.PREPARADOR_FISICO],
     items: [
       { to: "/treinos/frequencia", icon: FaClipboardCheck, label: "Chamada e Frequência" },
-      { to: "/treinos/avaliacoes", icon: FaChartBar, label: "Avaliações Técnicas" },
-      { to: "/equipes/minhas", icon: FaUsers, label: "Minhas Equipes" }
+      // { to: "/treinos/avaliacoes", icon: FaChartBar, label: "Avaliações Técnicas" },
+      { to: "/funcionarios", icon: FaUsers, label: "Minhas Equipes" }
     ]
   },
   {

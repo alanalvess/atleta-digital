@@ -15,6 +15,9 @@ public record TransicaoCategoriaRequest(
         String status,
         String parecerComissaoAnterior,
         String parecerComissaoNova,
+        Boolean aprovadoTreinadorAnterior,
+        Boolean aprovadoTreinadorNovo,
+        Boolean aprovadoCoordenadorTecnico,
         Long treinadorAnteriorId,
         Long treinadorNovoId,
         Long coordenadorTecnicoId

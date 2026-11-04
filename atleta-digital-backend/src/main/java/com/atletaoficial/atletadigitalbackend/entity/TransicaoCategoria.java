@@ -52,6 +52,15 @@ public class TransicaoCategoria {
     @Column(columnDefinition = "TEXT")
     private String parecerComissaoNova;
 
+    @Builder.Default
+    private Boolean aprovadoTreinadorAnterior = false;
+
+    @Builder.Default
+    private Boolean aprovadoTreinadorNovo = false;
+
+    @Builder.Default
+    private Boolean aprovadoCoordenadorTecnico = false;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "treinador_anterior_id")
     private Funcionario treinadorAnterior;

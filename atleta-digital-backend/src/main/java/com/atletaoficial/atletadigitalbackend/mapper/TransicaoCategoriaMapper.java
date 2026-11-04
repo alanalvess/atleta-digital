@@ -30,6 +30,9 @@ public class TransicaoCategoriaMapper {
                 .treinadorAnterior(treinadorAnterior)
                 .treinadorNovo(treinadorNovo)
                 .coordenadorTecnico(coordenador)
+                .aprovadoTreinadorAnterior(request.aprovadoTreinadorAnterior() != null ? request.aprovadoTreinadorAnterior() : false)
+                .aprovadoTreinadorNovo(request.aprovadoTreinadorNovo() != null ? request.aprovadoTreinadorNovo() : false)
+                .aprovadoCoordenadorTecnico(request.aprovadoCoordenadorTecnico() != null ? request.aprovadoCoordenadorTecnico() : false)
                 .build();
     }
 
@@ -52,6 +55,9 @@ public class TransicaoCategoriaMapper {
                 transicao.getTreinadorNovo() != null ? transicao.getTreinadorNovo().getNomeCompleto() : null,
                 transicao.getCoordenadorTecnico() != null ? transicao.getCoordenadorTecnico().getId() : null,
                 transicao.getCoordenadorTecnico() != null ? transicao.getCoordenadorTecnico().getNomeCompleto() : null,
+                transicao.getAprovadoTreinadorAnterior(),
+                transicao.getAprovadoTreinadorNovo(),
+                transicao.getAprovadoCoordenadorTecnico(),
                 transicao.getDataCriacao(),
                 transicao.getDataAtualizacao(),
                 transicao.getAtivo()

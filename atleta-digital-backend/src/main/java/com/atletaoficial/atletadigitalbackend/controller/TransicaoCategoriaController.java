@@ -34,6 +34,11 @@ public class TransicaoCategoriaController {
         return ResponseEntity.ok(service.listarPorAtleta(atletaId));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<TransicaoCategoriaResponse> atualizar(@PathVariable Long id, @RequestBody @Valid TransicaoCategoriaRequest request) {
+        return ResponseEntity.ok(service.atualizar(id, request));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> inativar(@PathVariable Long id) {
         service.inativar(id);

@@ -5,15 +5,21 @@ export interface TransicaoCategoria {
   atletaId: number;
   atletaNome?: string;
   temporada: string;
-  categoriaAtual: Categoria;
-  novaCategoria: Categoria;
+  categoriaAtual: Categoria | string;
+  novaCategoria: Categoria | string;
   dataTransicao: string;
   motivoTransicao?: string;
   status?: string;
   parecerComissaoAnterior?: string;
   parecerComissaoNova?: string;
   treinadorAnteriorId?: number;
+  treinadorAnteriorNome?: string;
   treinadorNovoId?: number;
+  treinadorNovoNome?: string;
   coordenadorTecnicoId?: number;
+  coordenadorTecnicoNome?: string;
+  aprovadoTreinadorAnterior?: boolean;
+  aprovadoTreinadorNovo?: boolean;
+  aprovadoCoordenadorTecnico?: boolean;
   ativo?: boolean;
 }
